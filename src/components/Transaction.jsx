@@ -1,30 +1,24 @@
-import React from 'react'
+import React,{useContext} from 'react';
+import { GlobalContext } from '../context/GlobalState';
 
-const Transaction = () => {
+const Transaction = ({transaction}) => {
+    const {deleteTransaction} = useContext(GlobalContext);
+    const sign = transaction.amount >0 ? '+':'-';
+    const theme =
+      sign === "+"
+        ? "bg-white flex justify-between px-3 py-2 mt-3 shadow-md border-r-4 border-green-500 w-full"
+        : "bg-white flex justify-between px-3 py-2 mt-3 shadow-md border-r-4 border-red-500 w-full";
   return (
-    <div className="px-3 mt-5">
-      <h2 className="text-lg font-semibold mb-2">Add new transaction</h2>
-      <hr />
-      <h3 className="my-2 text-sm font-semibold">Text</h3>
-      <input
-        type="text"
-        name="text"
-        className="w-full border px-2 py-1 outline-none"
-        placeholder="Enter text..."
-        autoComplete='false'
-      />
-      <h3 className="my-2 font-semibold text-sm">
-        Amount <br />
-        (negative-expense, positive-income)
-      </h3>
-      <input
-        type="text"
-        name="amount"
-        className="w-full border px-2 py-1 outline-none mb-4"
-        placeholder="Enter amount..."
-        autoComplete='false'
-      />
-      <button type='submit' className='bg-green-500 text-white w-full py-1 mb-2'>Add transaction</button>
+    <div className="flex">
+      {/* <div className='mt-3 mr-2 flex justify-center items-center'>
+        <button className="bg-red-500 px-2.5 py-1 text-white font-medium rounded-full" onClick={deleteTransaction(transaction.id)}>X</button>
+      </div> */}
+      <div className={theme}>
+        <h3>{transaction.text}</h3>
+        <h3>
+          {sign}${Math.abs(transaction.amount)}
+        </h3>
+      </div>
     </div>
   );
 }
